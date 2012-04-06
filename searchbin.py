@@ -14,6 +14,9 @@ Takes the binary file pattern.bin, and searches for an exact match within myfile
 +Minimum Py2.7 required for argparse library
 +Features: no compiling, less code, files of unlimited size, similar in usage to grep
 +keywords binary grep search seek find fast
+
+license: BSD 2-Clause License, 2012, Sepero
+license: http://www.opensource.org/licenses/BSD-2-Clause
 """
 
 VERSION = "0.1"
