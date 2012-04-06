@@ -1,4 +1,4 @@
-Search within binary files for a pattern and output the founds offsets (similar to grep). Can search using a smaller binary file, or using a hexidecimal string.
+Search within binary files for a pattern and output the found offsets (similar to grep). Can search using a smaller binary file, or using a hexidecimal string.
 
 Syntax:
 searchbin.py -p PATTERN [FILE [FILE...]]
