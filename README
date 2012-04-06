@@ -1,16 +1,18 @@
 A program for searching within binary files similar to grep. Can search using a smaller binary file, or using a hexidecimal string.
 
-searchbin -p PATTERN [FILE [FILE...]]
-searchbin -f FILE [FILE [FILE...]]
+Syntax:
+searchbin.py -p PATTERN [FILE [FILE...]]
+searchbin.py -f FILE [FILE [FILE...]]
 
-examples:
-./searchbin -p "CCDD??FF" myfile.exe
+
+Examples:
+python searchbin.py -p "CCDD??FF" myfile.exe
 Searches for the pattern "CCDD??FF" in myfile.exe, where ?? can be any byte value.
 
-./searchbin -f pattern.bin myfile.exe
+python searchbin.py -f pattern.bin myfile.exe
 Takes the binary file pattern.bin, and searches for an exact match within myfile.exe.
 
-./searchbin -h
+python searchbin.py -h
 Shows all optional program arguments.
 
 
