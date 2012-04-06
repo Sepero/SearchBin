@@ -1,3 +1,5 @@
+A program for searching within binary files similar to grep. Can search using a smaller binary file, or using a hexidecimal string.
+
 searchbin -p PATTERN [FILE [FILE...]]
 searchbin -f FILE [FILE [FILE...]]
 
@@ -6,10 +8,17 @@ examples:
 Searches for the pattern "CCDD??FF" in myfile.exe, where ?? can be any byte value.
 
 ./searchbin -f pattern.bin myfile.exe
-Takes the binary file pattern.bin, and searches for an exact match within myfile.exe. 
+Takes the binary file pattern.bin, and searches for an exact match within myfile.exe.
+
+./searchbin -h
+Shows all optional program arguments.
+
 
 +Minimum Py2.7 (argparse library)
 +Features: no compiling, less code, files of unlimited size, similar in usage to grep
-+keywords binary grep search seek find fast
++keywords hex hexidecimal binary grep search seek find fast
+
+An argument -f or -p is required. The -p argument accepts a hexidecimal pattern string and allows for missing characters, such as 'FF??FF'. When using -f argument, the pattern file will be read as a binary file (not hex strings). If no search files are specified, %prog will read from standard input. The minimum memory required is about 3 times the size of the binary pattern. Increasing buffer-size will increase program search speed for large search files. All size arguments are read in decimal format, '-s 1024' = start searching after 1kilobyte. Reported finds are 0-based offset.
+
 
 Please report any bugs
