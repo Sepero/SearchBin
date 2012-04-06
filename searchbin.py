@@ -76,7 +76,7 @@ def get_args():
   add("-f:--file:string:FILE:fpattern",
       help = "file to read search pattern from")
   add("-p:--pattern:long:PATTERN:pattern",
-      help = "a hexidecimal pattern in format '0xFF'")
+      help = "a hexidecimal pattern in format 'FF'")
   add("-b:--buffer-size:long:NUM:bsize",
       help = "read buffer size. 8MB default")
   add("-s:--start:long:NUM:start",
@@ -86,7 +86,7 @@ def get_args():
   add("-m:--max-count:long:NUM:max",
       help = "maximum number of matches to find")
   add("-l:--log:string:FILE:log",
-      help = "write matched offsets to FILE, and not standard output")
+      help = "write matched offsets to FILE, instead of standard output")
   p.add_argument("fsearch", type=str, metavar = "FILE", nargs = "*",
                  help = "files to search in for the pattern")
   p.add_argument("-v", "--verbose", dest = "verbose", action = "store_true",
