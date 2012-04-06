@@ -5,7 +5,7 @@ searchbin.py -p PATTERN [FILE [FILE...]]
 searchbin.py -f FILE [FILE [FILE...]]
 
 examples:
-./searchbin.py -p "CCDD??FF" myfile.exe
+./searchbin.py -p "0xCCDD??FF" myfile.exe
 Searches for the pattern "CCDD??FF" in myfile.exe, where ?? can be any byte value.
 
 ./searchbin.py -f pattern.bin myfile.exe
@@ -36,6 +36,8 @@ def _exit_error(code, option="", err=None):
       "No pattern to search for was supplied. '-p -f'",
     'decode':
       "The pattern string is invalid.\n" + str(option),
+    'nohex':
+      "The search pattern must start with '0x' for future compatibility",
     'bsize':
       "The buffer size must be at least %s bytes." % str(option),
     'sizes':
@@ -63,7 +65,7 @@ def get_args():
   Returns an args object with attributes representing all arguments.
   """
   from argparse import ArgumentParser
-  description = "An argument -f or -p is required. The -p argument accepts a hexidecimal pattern string and allows for missing characters, such as 'FF??FF'. When using -f argument, the pattern file will be read as a binary file (not hex strings). If no search files are specified, %prog will read from standard input. The minimum memory required is about 3 times the size of the binary pattern. Increasing buffer-size will increase program search speed for large search files. All size arguments are read in decimal format, '-s 1024' = start searching after 1kilobyte. Reported finds are 0-based offset."
+  description = "An argument -f or -p is required. The -p argument accepts a hexidecimal pattern string and allows for missing characters, such as '0xFF??FF'. When using -f argument, the pattern file will be read as a binary file (not hex strings). If no search files are specified, %prog will read from standard input. The minimum memory required is about 3 times the size of the binary pattern. Increasing buffer-size will increase program search speed for large search files. All size arguments are read in decimal format, '-s 1024' = start searching after 1kilobyte. Reported finds are 0-based offset."
   p = ArgumentParser(description=description)
   
   def add(s, **kwargs):
@@ -76,7 +78,7 @@ def get_args():
   add("-f:--file:string:FILE:fpattern",
       help = "file to read search pattern from")
   add("-p:--pattern:long:PATTERN:pattern",
-      help = "a hexidecimal pattern in format 'FF'")
+      help = "a hexidecimal pattern in format '0xFF'")
   add("-b:--buffer-size:long:NUM:bsize",
       help = "read buffer size. 8MB default")
   add("-s:--start:long:NUM:start",
@@ -116,6 +118,9 @@ def verify_args(ar):
     except IOError, e:
       _exit_error('fpattern', ar.fpattern, e)
   else: # If not a file, split ar.patterns into searchable parts.
+    if ar.pattern[:2] != "0x": # (Literal string searching may be included in future version)
+      _exit_error('nohex')
+    ar.pattern = ar.pattern[2:]
     try:
       ar.pattern = [ p.decode("hex") for p in ar.pattern.split("??") ]
     except TypeError, e:
