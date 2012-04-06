@@ -15,7 +15,8 @@ Takes the binary file pattern.bin, and searches for an exact match within myfile
 python searchbin.py -h
 Shows all optional program arguments.
 
-optional arguments:
+
+Optional Arguments:
   -h, --help            show help message and exit
   -f FILE, --file FILE  file to read search pattern from
   -p PATTERN, --pattern PATTERN
