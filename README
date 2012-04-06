@@ -6,7 +6,7 @@ searchbin.py -f FILE [FILE [FILE...]]
 
 
 Examples:
-python searchbin.py -p "CCDD??FF" myfile.exe
+python searchbin.py -p "0xCCDD??FF" myfile.exe
 Searches for the hexidecimal pattern "CCDD??FF" in myfile.exe, where ?? can be any byte value.
 
 python searchbin.py -f pattern.bin myfile.exe
@@ -20,7 +20,7 @@ Optional Arguments:
   -h, --help            show help message and exit
   -f FILE, --file FILE  file to read search pattern from
   -p PATTERN, --pattern PATTERN
-                        a hexidecimal pattern in format 'FF'
+                        a hexidecimal pattern in format '0xFF'
   -b NUM, --buffer-size NUM
                         read buffer size. 8MB default
   -s NUM, --start NUM   starting position in file to begin searching
@@ -35,7 +35,7 @@ Optional Arguments:
   -V, --version         print version information
 
 
-An argument -f or -p is required. The -p argument accepts a hexidecimal pattern string and allows for missing characters, such as 'FF??FF'. When using -f argument, the pattern file will be read as a binary file (not hex strings). If no search file is specified, searchbin.py will read from standard input. The minimum memory required is about 3 times the size of the binary pattern. Increasing the buffer-size will increase program search speed for large search files. All size arguments are read in decimal format, '-s 1024' = start searching after 1kilobyte. Reported finds are 0-based offset.
+An argument -f or -p is required. The -p argument accepts a hexidecimal pattern string and allows for missing characters, such as '0xFF??FF'. When using -f argument, the pattern file will be read as a binary file (not hex strings). If no search file is specified, searchbin.py will read from standard input. The minimum memory required is about 3 times the size of the binary pattern. Increasing the buffer-size will increase program search speed for large search files. All size arguments are read in decimal format, '-s 1024' = start searching after 1kilobyte. Reported finds are 0-based offset.
 
 +Minimum Py2.7 (argparse library)
 +Features: no compiling, less code, search in files of unlimited size, similar in usage to grep
