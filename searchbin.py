@@ -1,15 +1,16 @@
 #!/usr/bin/env python
 
 """
-searchbin -p PATTERN [FILE [FILE...]]
-searchbin -f FILE [FILE [FILE...]]
+searchbin.py -p PATTERN [FILE [FILE...]]
+searchbin.py -f FILE [FILE [FILE...]]
 
 examples:
-./searchbin -p "CCDD??FF" myfile.exe
+./searchbin.py -p "CCDD??FF" myfile.exe
 Searches for the pattern "CCDD??FF" in myfile.exe, where ?? can be any byte value.
 
-./searchbin -f pattern.bin myfile.exe
-Takes the binary file pattern.bin, and searches for an exact match within myfile.exe. 
+./searchbin.py -f pattern.bin myfile.exe
+Takes the binary file pattern.bin, and searches for an exact match within myfile.exe.
+
 
 +Minimum Py2.7 required for argparse library
 +Features: no compiling, less code, files of unlimited size, similar in usage to grep
@@ -253,5 +254,4 @@ def main():
 
 if __name__ == "__main__":
     main()
-
 
