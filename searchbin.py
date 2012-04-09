@@ -22,7 +22,7 @@ license: http://www.opensource.org/licenses/BSD-2-Clause
 
 VERSION = "0.1"
 
-import sys
+import sys, signal
 
 def _exit_error(code, option="", err=None):
   """
@@ -258,5 +258,7 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
-
+  def exit(a, b):
+    sys.exit()
+  signal.signal(signal.SIGINT, exit)
+  main()
