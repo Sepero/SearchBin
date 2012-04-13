@@ -236,7 +236,7 @@ def search(ar, fh):
       sbuffer = sbuffer[read_size:] # Erase front portion of buffer.
       find = find - read_size # Shift find index for the shifted buffer.
       #print(len(sbuffer), find) ## testing
-      assert find >= 0
+      #assert find >= 0 ## testing
   except IOError, e:
     _exit_error("read", fh.name, e)
 
