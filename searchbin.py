@@ -30,27 +30,27 @@ def _exit_error(code, option="", err=None):
   Returns nothing.  All calls exit the program, error status 128.
   """
   error_codes = {
-    '2patterns':
+    "2patterns":
       "Cannot search for both a binary file and hex pattern. '-p -f'",
-    '0patterns':
+    "0patterns":
       "No pattern to search for was supplied. '-p -f'",
-    'decode':
+    "decode":
       "The pattern string is invalid.\n" + str(option),
-    'nohex':
+    "nohex":
       "The search pattern must start with '0x' for future compatibility",
-    'bsize':
+    "bsize":
       "The buffer size must be at least %s bytes." % str(option),
-    'sizes':
+    "sizes":
       "Size parameters (-b -s -e -m) must be in decimal format.",
-    'fpattern':
+    "fpattern":
       "No pattern file found named: %s" % option,
-    'startend':
+    "startend":
       "The start of search must come before the end.",
-    'openfile':
+    "openfile":
       "Failed opening file: %s" % option,
-    'logwrite':
+    "logwrite":
       "Could not write to the log file: %s" % option,
-    'read':
+    "read":
       "Failed reading from file: %s" % option,
       
   }
@@ -70,9 +70,9 @@ def get_args():
   
   def add(s, **kwargs):
     args = s.split(":")
-    kwargs['dest'] = args.pop()
-    kwargs['metavar'] = args.pop()
-    kwargs['type'] = str if args.pop() else long ###
+    kwargs["dest"] = args.pop()
+    kwargs["metavar"] = args.pop()
+    kwargs["type"] = str if args.pop() else long ###
     p.add_argument(*args, **kwargs)
     
   add("-f:--file:string:FILE:fpattern",
@@ -93,7 +93,7 @@ def get_args():
                  help = "files to search in for the pattern")
   p.add_argument("-v", "--verbose", dest = "verbose", action = "store_true",
                  help = "verbose, output the number of bytes searched after each buffer read")
-  p.add_argument("-V", "--version",  action = 'version', 
+  p.add_argument("-V", "--version",  action = "version", 
                  version = "%(prog)s " + VERSION)
   return p.parse_args()
 
@@ -106,25 +106,25 @@ def verify_args(ar):
   """
   # Make sure that exactly 1 pattern argument was given.
   if ar.fpattern and ar.pattern:
-    _exit_error('2patterns')
+    _exit_error("2patterns")
   elif ar.fpattern is None and ar.pattern is None:
-    _exit_error('0patterns')
+    _exit_error("0patterns")
   
   # Change ar.pattern into a list, and fill it with binary string pieces.
   if ar.fpattern:
     try: # If file specified, read it into memory.
-      with open(ar.fpattern, 'r') as f:
+      with open(ar.fpattern, "r") as f:
         ar.pattern = [ f.read() ]
     except IOError, e:
-      _exit_error('fpattern', ar.fpattern, e)
+      _exit_error("fpattern", ar.fpattern, e)
   else: # If not a file, split ar.patterns into searchable parts.
     if ar.pattern[:2] != "0x": # (Literal string searching may be included in future version)
-      _exit_error('nohex')
+      _exit_error("nohex")
     ar.pattern = ar.pattern[2:]
     try:
       ar.pattern = [ p.decode("hex") for p in ar.pattern.split("??") ]
     except TypeError, e:
-      _exit_error('decode', ar.pattern, e)
+      _exit_error("decode", ar.pattern, e)
   
   # Convert all number args from strings into long integers.
   try:
@@ -132,12 +132,12 @@ def verify_args(ar):
       if getattr(ar, attr):
         setattr(ar, attr, long(getattr(ar, attr)))
   except ValueError, e:
-    _exit_error('sizes', err=e)
+    _exit_error("sizes", err=e)
   
   # Buffer size must be at least double max pattern size.
   if ar.bsize:
     if ar.bsize < len("?".join(ar.pattern)) * 2:
-      _exit_error('bsize', len("?".join(ar.pattern)) * 2)
+      _exit_error("bsize", len("?".join(ar.pattern)) * 2)
   else:
     ar.bsize = len("".join(ar.pattern)) * 2
     if ar.bsize < 2**23: # If bsize is < default, set to default.
@@ -145,14 +145,14 @@ def verify_args(ar):
     
   # End must be after start? :)
   if ar.start and ar.end and ar.start >= ar.end:
-    _exit_error('startend')
+    _exit_error("startend")
   
   # If log file is True, open it and replace ar.log with the file handler.
   if ar.log:
     try:
       ar.log = open(ar.log, "w")
     except IOError, e:
-      _exit_error('openfile', ar.log, e)
+      _exit_error("openfile", ar.log, e)
   
   return ar
 
@@ -166,7 +166,7 @@ def search(ar, fh):
   try:
     fh.seek(ar.start or 0)
   except IOError, e:
-    _exit_error('read', fh.name, err=e)
+    _exit_error("read", fh.name, err=e)
   
   # Localize variables for increased speed.
   pattern = ar.pattern
@@ -247,9 +247,9 @@ def main():
   if args.fsearch: # If filenames were given on the commandline, process them.
     while args.fsearch: # List of files to search inside.
       try: # Open a filehandler for the filename.
-        filehandler = open(args.fsearch[0], 'r')
+        filehandler = open(args.fsearch[0], "r")
       except IOError,e:
-        _exit_error('openfile', args.fsearch[0], e)
+        _exit_error("openfile", args.fsearch[0], e)
       search(args, filehandler)
       args.fsearch.pop(0) # Remove each file after search.
   else: # If no files were given, search using stdin.
