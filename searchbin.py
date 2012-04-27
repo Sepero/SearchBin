@@ -18,6 +18,7 @@ Takes the binary file pattern.bin, and searches for an exact match within myfile
 
 license: BSD 2-Clause License, 2012, Sepero
 license: http://www.opensource.org/licenses/BSD-2-Clause
+http://github.com/Sepero/SearchBin
 """
 
 VERSION = "0.1"
@@ -55,7 +56,10 @@ def _exit_error(code, option="", err=None):
       
   }
   if err: sys.stderr.write(str(err) + "\n")
-  sys.stderr.write("Error <" + str(code) + ">: " + error_codes[code] + "\n\n")
+  sys.stderr.write("Error <" + str(code) + ">: " + error_codes[code] + "\n")
+  sys.stderr.write("Report issues to:\n")
+  sys.stderr.write("cowpie 2000 @ hotmail dot com\n")
+  sys.stderr.write("or http://github.com/Sepero/SearchBin\n\n")
   sys.exit(128)
 
 
@@ -65,7 +69,7 @@ def get_args():
   Returns an args object with attributes representing all arguments.
   """
   from argparse import ArgumentParser
-  description = "An argument -f or -p is required. The -p argument accepts a hexidecimal pattern string and allows for missing characters, such as '0xFF??FF'. When using -f argument, the pattern file will be read as a binary file (not hex strings). If no search files are specified, %prog will read from standard input. The minimum memory required is about 3 times the size of the binary pattern. Increasing buffer-size will increase program search speed for large search files. All size arguments are read in decimal format, '-s 1024' = start searching after 1kilobyte. Reported finds are 0-based offset."
+  description = "http://github.com/Sepero/SearchBin\nAn argument -f or -p is required. The -p argument accepts a hexidecimal pattern string and allows for missing characters, such as '0xFF??FF'. When using -f argument, the pattern file will be read as a binary file (not hex strings). If no search files are specified, %prog will read from standard input. The minimum memory required is about 3 times the size of the binary pattern. Increasing buffer-size will increase program search speed for large search files. All size arguments are read in decimal format, '-s 1024' = start searching after 1kilobyte. Reported finds are 0-based offset."
   p = ArgumentParser(description=description)
   
   def add(s, **kwargs):
