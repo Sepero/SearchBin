@@ -29,7 +29,7 @@ CONTACT=("sepero 111 @ gmail . com\n"
          "https://github.com/Sepero/SearchBin/issues/new\n"
          "http://seperohacker.blogspot.com/2012/04/binary-grep-program-searchbin.html")
 
-VERSION="0.20"
+VERSION="0.21"
 
 import sys, signal, re
 
@@ -125,8 +125,8 @@ def get_args():
       help = "verbose, output the number of bytes searched after each buffer read")
   add("-V:--version:::", action = "version",
       version = "%(prog)s " + VERSION)
-#  add("-d:--debug:::debug", action = "store_true",
-#      help = "debugging")
+  add("-d:--debug:::debug", action = "store_true",
+      help = "debugging (don't use this)")
       
   return p.parse_args()
 
