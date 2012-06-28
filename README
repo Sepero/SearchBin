@@ -1,9 +1,9 @@
-Search within binary files for a pattern and output the found offsets (similar to grep). Can search for a text string, hexidecimal string, or a smaller binary file.
+Search within binary files for a pattern and output the found offsets (similar to grep). You can search using a text string, hexidecimal string, or a smaller binary file.
 
 Syntax:
 searchbin.py -t PATTERN [FILE [FILE...]]
 searchbin.py -p PATTERN [FILE [FILE...]]
-searchbin.py -f FILE [FILE [FILE...]]
+searchbin.py -f FILE    [FILE [FILE...]]
 
 
 Examples:
@@ -67,3 +67,4 @@ Reported finds are 0-based offset.
 Please report bugs & feature requests to  sepero 111 @ gmail . com
   or https://github.com/Sepero/SearchBin/issues/new
   or http://seperohacker.blogspot.com/2012/04/binary-grep-program-searchbin.html
+
