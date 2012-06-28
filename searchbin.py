@@ -127,7 +127,7 @@ def get_args():
       version = "%(prog)s " + VERSION)
   add("-d:--debug:::debug", action = "store_true",
       help = "debugging (don't use this)")
-      
+  
   return p.parse_args()
 
 
@@ -258,7 +258,7 @@ def _debug_search(pattern, fh_name, fh_read):
 def _search_loop(start, end, bsize, pattern, max_matches,
                   log, verbose, fh_name, fh_read, fh_seek):
   """
-  Searches the filehandler held by fh, with search settings in ar.
+  Primary search function.
   Returns nothing.
   """
   len_pattern = len("?".join(pattern)) # Byte length of pattern.
@@ -270,31 +270,33 @@ def _search_loop(start, end, bsize, pattern, max_matches,
   # Grab regex search function directly to speed up function calls.
   regex_search = re.compile(pattern, re.DOTALL+re.MULTILINE).search
   
+  offset = long(start or 0)
   # Set start reading position in file.
   try:
-    fh_seek(start or 0)
+    fh_seek(offset)
   except IOError, e:
     _exit_error("read", fh_name, err=e)
   
   try:
-    offset = long(start or 0)
-    sbuffer = fh_read(len_pattern + read_size)
-    match = regex_search(sbuffer)
+    sbuffer = fh_read(len_pattern + read_size) # Get initial buffer amount.
+    match = regex_search(sbuffer) # Search for a match in the buffer.
+    # Set match to -1 if no match, else set it to the match position.
     match = -1 if match == None else match.start()
-    while True:
-      if match == -1:
+    
+    while True: # Begin main loop for searching through a file.
+      if match == -1: # No match.
         offset += read_size
         # If end exists and we are beyond end, finish search.
         if end and offset > end:
           return
         sbuffer = sbuffer[read_size:] # Erase front portion of buffer.
-        sbuffer += fh_read(read_size)
-        match = regex_search(sbuffer)
+        sbuffer += fh_read(read_size) # Read more into the buffer.
+        match = regex_search(sbuffer) # Search for next match in the buffer.
         # If there is no match set match to -1, else the matching position.
         match = -1 if match == None else match.start()
         if verbose: # Print each loop offset if verbose is on.
           print("Passing offset: %14d %12X" % (offset, offset))
-      else:
+      else: # Else- there was a match.
         # If end exists and we are beyond end, finish search.
         if match == -1 and offset + match > end:
           return
@@ -310,12 +312,15 @@ def _search_loop(start, end, bsize, pattern, max_matches,
             print("Found maximum number of matches.")
             return
         
-        # Get next match.
+        # Search for next match in the buffer.
         match = regex_search(sbuffer, match+1)
         match = -1 if match == None else match.start()
         
-      if len(sbuffer) <= len_pattern: # Finished reading file- end.
+      if len(sbuffer) <= len_pattern: # If finished reading input then end.
         return
+        
+    # Main loop closes here.
+  
   except IOError, e:
     _exit_error("read", fh_name, e)
 
