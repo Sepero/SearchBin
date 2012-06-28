@@ -29,7 +29,7 @@ CONTACT=("sepero 111 @ gmail . com\n"
          "https://github.com/Sepero/SearchBin/issues/new\n"
          "http://seperohacker.blogspot.com/2012/04/binary-grep-program-searchbin.html")
 
-VERSION="0.21"
+VERSION="0.22"
 
 import sys, signal, re
 
