@@ -81,7 +81,9 @@ def _exit_error(code, option="", err=None):
 		sys.stderr.write("Please Report issues to: %s\n" % CONTACT)
 		if err: sys.stderr.write("%s\n" % str(err))
 	sys.stderr.write("Error <%s>: %s\n\n" % (code, error_codes[code]))
-	if __name__ == "__main__": sys.exit(128) # Exit under normal operation.
+	if __name__ == "__main__":
+		sys.exit(128) # Exit under normal operation.
+	raise # Raise error on unittest or other execution.
 
 
 def get_args():
@@ -191,9 +193,6 @@ def hex_to_pattern(hex):
 			return [ bytes.fromhex(p) for p in ret ]
 		except AttributeError: # Python 2.
 			return [ p.decode("hex") for p in ret ]
-	#except :
-		#e = sys.exc_info()[1]
-		#_exit_error("decode", hex, e)
 	except(TypeError, ValueError):
 		e = sys.exc_info()[1]
 		_exit_error("decode", hex, e)
