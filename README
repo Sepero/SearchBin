@@ -11,10 +11,9 @@ searchbin.py -t PATTERN [FILE [FILE...]]
 searchbin.py -p PATTERN [FILE [FILE...]]
 searchbin.py -f FILE    [FILE [FILE...]]
 
-Any discovered matches will print out the found offsets (0-based).
 
-An example of usage. Search for the hex bytes "FF14DE" in the file gamefile.db:
-
+EXAMPLES
+Search for the hex bytes "FF14DE" in the file gamefile.db:
 $ ./searchbin.py -p "FF14DE" gamefile.db
 Match at offset:            907          38B in  gamefile.db
 Match at offset:           1881          759 in  gamefile.db
@@ -22,10 +21,11 @@ Match at offset:           7284         1C74 in  gamefile.db
 Match at offset:           7420         1CFC in  gamefile.db
 Match at offset:           8096         1FA0 in  gamefile.db
 
-The printed offsets are listed in decimal and hexidecimal formats.
 
+The printed offsets are listed in decimal and hexidecimal formats.
 You can also search for unknown patterns with "??". Just insert them where ever you have an unknown byte:
 $ ./searchbin.py -p "FF??DE" gamefile.db
+
 
 You can search through multiple files at once, and search piped input:
 $ ./searchbin.py -p "FF??EE" gamefile.db supersecret.idx
@@ -74,7 +74,8 @@ required is about 3 times the size of the pattern byte length.
 Increasing buffer-size will increase program search speed for 
 large search files. All size arguments (-b -s -e) are read in decimal 
 format, for example: '-s 1024' will start searching after 1kilobyte.
-Reported finds are 0-based offset.
+Pattern files do not allow for wildcard matching.
+Reported matches are displayed as 0-based offset.
 
 
 
@@ -87,12 +88,12 @@ Search for the text string "T?m" in myfile.exe, where ? is a wildcard. This will
 ./searchbin.py -t "T?m" myfile.exe
 
 
-Search for the hexidecimal pattern "CCDDFF" in myfile.exe.
-./searchbin.py -p "CCDDFF" myfile.exe
+Search for the hexidecimal pattern "AABBCCDDEE" in myfile.exe.
+./searchbin.py -p "AABBCCDDEE" myfile.exe
 
 
-Searches for the hexidecimal pattern "CC??FF" in myfile.exe, where ?? can be any byte value.
-./searchbin.py -p "CC??FF" myfile.exe
+Searches for the hexidecimal pattern "AA??CC??EE" in myfile.exe, where ?? can be any byte value.
+./searchbin.py -p "AA??CC??EE" myfile.exe
 
 
 Takes the binary file pattern.bin, and searches for an exact match within myfile.exe.
@@ -101,12 +102,12 @@ Takes the binary file pattern.bin, and searches for an exact match within myfile
 
 Features:
 +No compiling necessary
-+Requires Python 2.7
++Requires Python 2.7 or Python 3
 +Less code
 +Search in files of unlimited size
 keywords: hex hexidecimal binary like grep search seek find fast
 
-Please report bugs & feature requests to  sepero 111 @ gmail . com
-  or https://bitbucket.org/Sepero/searchbin/issues/new
+Please report bugs & feature requests to  sepero 111 @ gmx . com
+  or https://github.com/Sepero/SearchBin/issues
   or http://seperohacker.blogspot.com/2012/04/binary-grep-program-searchbin.html
 
