@@ -29,7 +29,7 @@ $ ./searchbin.py -p "FF??DE" gamefile.db
 
 You can search through multiple files at once, and search piped input:
 $ ./searchbin.py -p "FF??EE" gamefile.db supersecret.idx
-$ cat gamefile.db | ./searchbin -p "0xFF??EE"
+$ cat gamefile.db | ./searchbin -p "FF??EE"
 
 
 You can also search using regular text strings and other binary files.
@@ -48,9 +48,9 @@ Optional Arguments:
                         a (non-unicode case-sensitive) text string to search
                         for
   -p PATTERN, --pattern PATTERN
-                        a hexidecimal pattern in format '0xFF'
+                        a hexidecimal pattern to search for
   -b NUM, --buffer-size NUM
-                        read buffer size (in bytes). 8MB default
+                        read buffer size (in bytes). default is 8388608 (8MB)
   -s NUM, --start NUM   starting position in file to begin searching
   -e NUM, --end NUM     end search at this position, measuring from beginning
                         of file
