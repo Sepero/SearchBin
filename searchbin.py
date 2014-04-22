@@ -144,7 +144,7 @@ def get_args():
 	except: # Python 2.
 		p.add_argument('-b', '--buffer-size', type=long,
 				metavar='NUM', dest='bsize',
-				help='read buffer size (in bytes). 8MB default')
+				help='read buffer size (in bytes). default is 8388608 (8MB)')
 		p.add_argument('-s', '--start', type=long,
 				metavar='NUM', dest='start',
 				help='starting position in file to begin searching, as bytes')
