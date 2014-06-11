@@ -261,7 +261,7 @@ def verify_args(ar):
 	ar.start =  ar.start or 0
 	ar.end = ar.end or 0
 	# End must be after start.  :)
-	if ar.start and ar.start >= ar.end:
+	if ar.end and ar.start >= ar.end:
 		_exit_error("startend")
 	
 	# If log file is True, open it and replace ar.log with the file handler.
