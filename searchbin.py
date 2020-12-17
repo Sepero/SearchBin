@@ -313,7 +313,7 @@ def _debug_search(pattern, fh_name, fh_read):
 				buffer += fh_read(read_size)
 				match = regex.search(buffer)
 			else:
-				STDOUT.write("Match at offset: %14d %12X in  %s\n" % (
+				STDOUT.write("Match at offset: %14d decimal %12X hex in  %s\n" % (
 						offset+match.start(), offset+match.start(), fh_name))
 				match = regex.search(buffer, match.start()+1)
 			
@@ -374,8 +374,11 @@ def _search_loop(start, end, bsize, pattern, max_matches,
 				
 				# Print matched offset.
 				find_offset = offset + match
-				STDOUT.write("Match at offset: %14d %12X in  %s\n" % (
-						find_offset, find_offset, fh_name))
+				if bytes(".", 'utf-8') in pattern:       # see the matched pattern when you use wildcard ?? ("?" -> ".")
+					mstr = ' '.join(format(x, "02X") for x in buffer[match:match+len_pattern])
+					STDOUT.write("Match (%s) at offset: %14d decimal %12X hex in %s\n" % ( mstr, find_offset, find_offset, fh_name ))
+				else:
+					STDOUT.write("Match at offset: %14d decimal %12X hex in  %s\n" % ( find_offset, find_offset, fh_name))
 				
 				if max_matches:
 					max_matches -= 1
