@@ -105,6 +105,7 @@ Features:
 +Requires Python 2.7 or Python 3
 +Less code
 +Search in files of unlimited size
++See the matched pattern when you use wildcard "??"
 keywords: hex hexidecimal binary like grep search seek find fast
 
 Please report bugs & feature requests to  sepero 111 @ gmx . com
