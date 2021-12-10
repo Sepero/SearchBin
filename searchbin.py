@@ -85,6 +85,8 @@ def _exit_error(code, option="", err=None):
 		sys.exit(128) # Exit under normal operation.
 	raise # Raise error on unittest or other execution.
 
+def binarysearch(element,arr):
+	return(element in arr)
 
 def get_args():
 	"""
